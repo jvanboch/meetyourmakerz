@@ -1,117 +1,76 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import TextareaAutosize from "react-textarea-autosize";
-import {
-  Divider,
-  Container,
-  Form,
-  Header,
-  Message,
-  Segment
-} from "semantic-ui-react";
+import React, { Component } from 'react'
+import STLViewer from 'stl-viewer'
 
-export default class Component1 extends React.Component {
-  state = { value: "" };
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Radio,
+  Select,
+  TextArea,
+} from 'semantic-ui-react'
+
+ 
+const options = [
+  { key: '3', text: '3d Printed', value: '3d' },
+  { key: 'c', text: 'CNC', value: 'CNC' },
+  { key: 'o', text: 'other', value: 'other' },
+]
+
+class FormExampleFieldControl extends Component {
+  state = {qty:'',
+           value:''}
+
+  handleChange = (e, { value }) => this.setState({ value })
 
   render() {
+    const { value } = this.state
     return (
-      <Container>
-        <Divider hidden />
-        <Message info>
-          <Message.Header>
-            Usage with <code>react-textarea-autosize</code>
-          </Message.Header>
-          <Message.Content>
-            This CodeSandbox replicates usage examples{" "}
-            <a href="https://andreypopp.github.io/react-textarea-autosize/">
-              react-textarea-autosize
-            </a>{" "}
-            and shows how you can use it with Semantic UI React.
-          </Message.Content>
-        </Message>
+      <div style={{"width": "50%", "display": "flex", "align-items":"center", "justifyContent":"center", "border":"solid", height: '100vh'}}>
+      <Form>
+        <h1>Submit a Request</h1>
+        <Form.Group widths='equal'>
+          <Form.Field
+            control={Input}
+            label='First name'
+            placeholder='First name'
+          />
+          <Form.Field
+            control={Input}
+            label='Last name'
+            placeholder='Last name'
+          />
+          <Form.Field
+            control={Select}
+            label='Manufactured Type'
+            options={options}
+            placeholder='3d printed'
+          />
+        </Form.Group>
+        <Form.Group inline>
+          <label>Quantity</label>
+          <Form.Field
+            control={Input}
+            placeholder='1'
 
-        <Segment>
-          <Header as="h3">
-            Controlled mode with <code>{`<Form />`}</code>
-          </Header>
-          <Form>
-            <Form.Field
-              control={TextareaAutosize}
-              label="About"
-              placeholder="Tell us more about you..."
-              onChange={(e, data) => this.setState({ value: data.value })}
-              useCacheForDOMMeasurements
-              value={this.state.value}
-            />
+          />
 
-            <Form.Button
-              content="Clear"
-              onClick={() => this.setState({ value: "" })}
-            />
-          </Form>
-        </Segment>
-
-        <Segment.Group>
-          <Segment as={Form}>
-            <Header as="h3">
-              Textarea with <code>maxRows</code> and <code>minRows</code>
-            </Header>
-            <TextareaAutosize
-              minRows={3}
-              maxRows={6}
-              defaultValue="Just a single line..."
-            />
-          </Segment>
-          <Segment as={Form}>
-            <Header as="h3">
-              Textarea with <code>maxRows</code> and <code>minRows</code> (
-              <code>box-sizing: border-box</code>)
-            </Header>
-            <TextareaAutosize
-              defaultValue="Just a single line..."
-              minRows={3}
-              maxRows={6}
-              style={{ boxSizing: "border-box" }}
-            />
-          </Segment>
-          <Segment as={Form}>
-            <Header as="h3">
-              Textarea with <code>maxRows</code>
-            </Header>
-            <TextareaAutosize
-              defaultValue="Just a single line..."
-              maxRows={5}
-            />
-          </Segment>
-          <Segment as={Form}>
-            <Header as="h3">
-              Textarea with <code>maxHeight</code>
-            </Header>
-            <TextareaAutosize
-              defaultValue="Just a single line..."
-              style={{ maxHeight: 300 }}
-            />
-          </Segment>
-          <Segment as={Form}>
-            <Header as="h3">
-              Component with <code>rows</code> set
-            </Header>
-            <TextareaAutosize defaultValue="Just a single line..." rows={4} />
-          </Segment>
-          <Segment as={Form}>
-            <Header as="h3">Receive message on height change</Header>
-
-            <TextareaAutosize
-              defaultValue="Just a single line..."
-              onHeightChange={(height, instance) =>
-                console.log(height, instance.rowCount)
-              }
-              useCacheForDOMMeasurements
-            />
-          </Segment>
-        </Segment.Group>
-      </Container>
-    );
+        </Form.Group>
+        <Form.Field
+          control={TextArea}
+          label='About'
+          placeholder='Tell us more about your project...'
+        />
+        <Form.Field
+          control={Checkbox}
+          label='I agree to the Terms and Conditions'
+        />
+        <Form.Field control={Button}>Submit</Form.Field>
+      </Form>
+      </div>
+    )
   }
 }
 
+export default FormExampleFieldControl
