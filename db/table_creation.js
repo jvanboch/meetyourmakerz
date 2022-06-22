@@ -27,6 +27,10 @@ const Projects = sequelize.define('project', {
         model: 'user', 
         key: 'user_id' 
   },
+  qty:{
+      type:Sequelize.INTEGER,
+      allowNull:false
+  },
     project_description: { type: Sequelize.STRING, allowNull:false },
     myDate: { type: Sequelize.DATE, 
             defaultValue: Sequelize.NOW },

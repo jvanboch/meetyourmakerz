@@ -21,9 +21,27 @@ const options = [
 class FormExampleFieldControl extends Component {
   state = {qty:'',
            value:''}
+  onSubmit(e) {
+    e.preventDefault();
+    console.log(this.state.value, this.state.qty)
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({project_description: this.state.value, qty: this.state.qty })
+  };
+  fetch('/api/form', requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState({ postId: data.id }));
+}
 
-  handleChange = (e, { value }) => this.setState({ value })
-
+ 
+  onChangeProjectDescription(event, data){
+  this.setState({ value: data.value })
+}
+onChangeQty(event, data){
+  
+  this.setState({ qty: data.value })
+}
   render() {
     const { value } = this.state
     return (
@@ -52,6 +70,7 @@ class FormExampleFieldControl extends Component {
           <label>Quantity</label>
           <Form.Field
             control={Input}
+            onChange={this.onChangeQty.bind(this)}
             placeholder='1'
 
           />
@@ -59,6 +78,7 @@ class FormExampleFieldControl extends Component {
         </Form.Group>
         <Form.Field
           control={TextArea}
+          onChange={this.onChangeProjectDescription.bind(this)}
           label='About'
           placeholder='Tell us more about your project...'
         />
@@ -66,7 +86,7 @@ class FormExampleFieldControl extends Component {
           control={Checkbox}
           label='I agree to the Terms and Conditions'
         />
-        <Form.Field control={Button}>Submit</Form.Field>
+        <Form.Field onClick={this.onSubmit.bind(this)} control={Button}>Submit</Form.Field>
       </Form>
       </div>
     )
