@@ -19,7 +19,6 @@ module.exports = {
     getProjects(req,res){
         return Projects
         .findAll({}).then((projects)=>{
-            console.log('here are the projects', projects)
             res.status(200).send(projects)})
         .catch((error)=>{
             console.log(error)
@@ -36,7 +35,19 @@ module.exports = {
         .catch((error)=>{
             console.log(error)
         res.status(400).send(error)})
-    }
+    },
+    user_login(req,res){
+        return Users
+        .findOne({where:{username:req.body.username}})
+        .then((result)=>bcrypt.compare(req.body.password, result.password))
+        .then((result)=>{
+            res.status(200).send({'result':result})})
+        .catch((error)=>{
+            console.log(error)
+            res.status(400).send(error)
+        })
+
+        }
     }
 
 

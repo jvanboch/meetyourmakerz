@@ -15,6 +15,11 @@ import { render } from "react-dom";
 import { BreadcrumbSection } from "semantic-ui-react";
 import SideBar from './SideBar.jsx'
 class App extends Component {
+	constructor(props) {
+		super(props);
+		
+	  }
+
 	render() {
 		return (
 		<div>
