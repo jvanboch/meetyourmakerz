@@ -3,7 +3,7 @@ import { Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
 
 const SideBar = () => (
   <Sidebar.Pushable as={Segment}>
-    <Sidebar
+    <Sidebar 
       as={Menu}
       animation='overlay'
       icon='labeled'

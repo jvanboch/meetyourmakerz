@@ -12,6 +12,7 @@ bodyParser = require('body-parser')
 var cors = require('cors')
 app.use(cors())
 app.use(bodyParser.json());
+app.get('/api/jobs',projectFormController.getProjects)
 app.use(express.static(`${__dirname}/client/dist`));
 app.get('/*', (req, res) => {
   res.sendFile(`${__dirname}/client/dist/index.html`);
