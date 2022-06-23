@@ -1,9 +1,10 @@
 
+
 const express = require('express')
 const app = express()
 
 const path = require("path");
-var router = express.Router();
+// var router = express.Router();
 const projectFormController = require('./controllers/form');
 const port = 3000
 bodyParser = require('body-parser')
@@ -11,7 +12,8 @@ bodyParser = require('body-parser')
 var cors = require('cors')
 app.use(cors())
 app.use(bodyParser.json());
-app.get("/", (req, res) => {
+app.use(express.static(`${__dirname}/client/dist`));
+app.get('/*', (req, res) => {
   res.sendFile(`${__dirname}/client/dist/index.html`);
 });
 
@@ -29,4 +31,3 @@ app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
   })
   
-app.use(express.static(`${__dirname}/client/dist`));

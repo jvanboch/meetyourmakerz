@@ -6,7 +6,10 @@ module.exports= {
         filename: 'bundle.js',
         path: path.join(__dirname,'/client/dist'),
       },
-  
+      devServer: {
+        historyApiFallback: true,
+      },
+      devtool: 'eval-source-map',
     module: {
     rules: [
       {
@@ -24,10 +27,11 @@ module.exports= {
         {
           test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
-        },
+
+        }
 
 ]
    
-},
+}
 
   }
