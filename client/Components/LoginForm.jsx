@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
-
+import { NavLink } from 'react-router-dom'
 const LoginForm = () => (
   <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
@@ -9,7 +9,7 @@ const LoginForm = () => (
       </Header>
       <Form size='large'>
         <Segment stacked>
-          <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
+          <Form.Input fluid icon='user' iconPosition='left' placeholder='User Name' />
           <Form.Input
             fluid
             icon='lock'
@@ -24,7 +24,7 @@ const LoginForm = () => (
         </Segment>
       </Form>
       <Message>
-        New to us? <a href='#'>Sign Up</a>
+        New to us?<NavLink to="/signup"> Sign Up </NavLink>
       </Message>
     </Grid.Column>
   </Grid>

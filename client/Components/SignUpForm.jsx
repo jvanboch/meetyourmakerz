@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { NavLink } from 'react-router-dom'
+
+
+
 
 class SignUpForm extends Component{
     state = {
@@ -7,6 +11,7 @@ class SignUpForm extends Component{
         password:'',
         email:''
     }
+
     onSubmit(e){
         e.preventDefault()
         const requestOptions={
@@ -27,6 +32,11 @@ class SignUpForm extends Component{
     onChangeEmail(event, data){
         this.setState({ email: data.value })
       }
+       onLinkClick = (e) => {
+        e.preventDefault();
+        useNavigate('/login');
+    };
+    
     render(){
         return(
   <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
@@ -53,7 +63,7 @@ class SignUpForm extends Component{
         </Segment>
       </Form>
       <Message>
-        Already have an account? <a href='#'>Sign In</a>
+        Already have an account?<NavLink to="/login"> Sign In </NavLink>
       </Message>
     </Grid.Column>
   </Grid>
