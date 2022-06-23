@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Header, Table, Rating } from 'semantic-ui-react'
-
+import SideBar from './SideBar.jsx'
 class Jobs extends Component {
         state = {jobs:[]}
 
@@ -16,7 +16,9 @@ class Jobs extends Component {
 
     render(){
     return(
-        
+  <div style={{ "display": "flex", height: '100vh'}}>
+      <div style={{ "border":"solid", "width":"8%"}}><SideBar/></div>
+      <div style={{"width":"100%", "display": "flex", "align-items":"center", "justifyContent":"center", "border":"solid 1px #dddddd", height: '100vh', "padding":"10%"}}>
   <Table celled padded>
     <Table.Header>
        
@@ -42,6 +44,8 @@ class Jobs extends Component {
 
     </Table.Body>
   </Table>
+  </div>
+  </div>      
 )
 }}
 export default Jobs
