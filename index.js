@@ -19,7 +19,7 @@ app.get('/*', (req, res) => {
 });
 
 app.post('/api/form',projectFormController.new_project)
-
+app.post('/api/signup', projectFormController.user_signup)
 // router.route('/api/form')
 // .post(projectFormController.new_project)
 // .get(function(req,res,next){

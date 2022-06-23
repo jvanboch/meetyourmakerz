@@ -23,7 +23,6 @@ class JobForm extends Component {
            value:''}
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state.value, this.state.qty)
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

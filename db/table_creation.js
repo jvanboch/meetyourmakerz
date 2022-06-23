@@ -1,16 +1,22 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('./connection');
-const User = sequelize.define('user', {
+
+const Users = sequelize.define('user', {
     user_id:{
         type:Sequelize.INTEGER,
         autoIncrement:true,
         allowNull:false,
         primaryKey:true
     },
-    name: { type: Sequelize.STRING, allowNull:false },
+    username: { type: Sequelize.STRING, allowNull:false },
     email: { type: Sequelize.STRING, allowNull:false },
     myDate: { type: Sequelize.DATE, 
             defaultValue: Sequelize.NOW },
+    password: {
+        field: 'user_password',
+        type: Sequelize.STRING,
+        allowNull: true
+        },
      createdAt: Sequelize.DATE,
      updatedAt: Sequelize.DATE,
 })
@@ -37,6 +43,11 @@ const Projects = sequelize.define('project', {
      createdAt: Sequelize.DATE,
      updatedAt: Sequelize.DATE,
 })
+
+const Controller = {
+    Users:Users,
+    Projects:Projects
+  
+  }
 sequelize.sync()
-module.exports = User
-module.exports = Projects
+module.exports = Controller
