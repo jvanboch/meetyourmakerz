@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import STLViewer from 'stl-viewer'
-
+import SideBar from './SideBar.jsx'
 import {
   Button,
   Checkbox,
@@ -45,7 +45,10 @@ onChangeQty(event, data){
   render() {
     const { value } = this.state
     return (
-      <div style={{ "display": "flex", "align-items":"center", "justifyContent":"center", "border":"solid 1px #dddddd", height: '100vh'}}>
+    
+        
+      <div style={{ "display": "flex", height: '100vh'}}>
+        <div style={{ "border":"solid", "width":"8%"}}><SideBar/></div>
         <div style={{ "width":"50%","display": "flex", "align-items":"center", "justifyContent":"center", "border":"solid 1px #dddddd", height: '100vh'}}>
       <Form>
         <h1>Submit a Request</h1>
@@ -91,6 +94,7 @@ onChangeQty(event, data){
       </Form>
       </div>
       </div>
+     
     )
   }
 }
