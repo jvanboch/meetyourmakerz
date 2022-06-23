@@ -1,7 +1,8 @@
 const Controller = require('../db/table_creation')
 const Projects = Controller.Projects
 const Users = Controller.Users
-console.log(Controller)
+const bcrypt = require('bcrypt');
+
 module.exports = {
     new_project(req,res) {
        
@@ -24,11 +25,12 @@ module.exports = {
             console.log(error)
             res.status(400).send(error)})
         },
-    user_signup(req,res){//used to create a new user
+    async user_signup(req,res){//used to create a new user
+        const salt = await bcrypt.genSalt(10);
         return Users
         .create({
             username:req.body.username,
-            password: req.body.password,
+            password:  await bcrypt.hash(req.body.password, salt),
             email: req.body.email
         }).then((created)=>res.status(201).send(created))
         .catch((error)=>{

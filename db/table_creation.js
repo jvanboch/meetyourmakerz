@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('./connection');
-
 const Users = sequelize.define('user', {
     user_id:{
         type:Sequelize.INTEGER,
@@ -20,8 +19,10 @@ const Users = sequelize.define('user', {
      createdAt: Sequelize.DATE,
      updatedAt: Sequelize.DATE,
 })
+   
 
-const Projects = sequelize.define('project', {
+   
+var Projects = sequelize.define('project', {
     project_id:{
         type:Sequelize.INTEGER,
         autoIncrement:true,
