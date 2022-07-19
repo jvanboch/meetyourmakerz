@@ -13,6 +13,7 @@ var cors = require('cors')
 app.use(cors())
 app.use(bodyParser.json());
 app.get('/api/jobs',projectFormController.getProjects)
+app.get('/api/user_description', projectFormController.get_user_description)
 app.use(express.static(`${__dirname}/client/dist`));
 app.get('/*', (req, res) => {
   res.sendFile(`${__dirname}/client/dist/index.html`);
@@ -20,6 +21,7 @@ app.get('/*', (req, res) => {
 app.post('/api/userlogin',projectFormController.user_login)
 app.post('/api/form',projectFormController.new_project)
 app.post('/api/signup', projectFormController.user_signup)
+app.post('/api/user_description', projectFormController.new_description)
 
 // router.route('/api/form')
 // .post(projectFormController.new_project)

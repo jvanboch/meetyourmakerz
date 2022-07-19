@@ -1,6 +1,7 @@
 const Controller = require('../db/table_creation')
 const Projects = Controller.Projects
 const Users = Controller.Users
+const usersDescription = Controller.usersDescription
 const bcrypt = require('bcrypt');
 
 module.exports = {
@@ -42,6 +43,28 @@ module.exports = {
         .then((result)=>bcrypt.compare(req.body.password, result.password))
         .then((result)=>{
             res.status(200).send({'result':result})})
+        .catch((error)=>{
+            console.log(error)
+            res.status(400).send(error)
+        })
+
+        },
+    new_description(req,res) {
+    
+        return usersDescription
+        .create({
+            user_description:req.body.user_description
+        })
+    .then((result) => res.status(201).send(result))
+    .catch((error) => {
+        console.log(error)
+        res.status(400).send(error)});
+    },
+    get_user_description(req,res){
+        return usersDescription
+        .findOne({where:{user_description_id:"34"}})
+        .then((result)=>{
+            res.status(200).send({'user_description':result})})
         .catch((error)=>{
             console.log(error)
             res.status(400).send(error)

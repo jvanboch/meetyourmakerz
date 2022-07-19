@@ -44,11 +44,30 @@ var Projects = sequelize.define('project', {
      createdAt: Sequelize.DATE,
      updatedAt: Sequelize.DATE,
 })
-
+const usersDescription = sequelize.define('userDescription', {
+    user_description_id:{
+        type:Sequelize.INTEGER,
+        autoIncrement:true,
+        allowNull:false,
+        primaryKey:true
+    },
+    user_id: {
+        type: Sequelize.INTEGER,
+        model: 'user', 
+        key: 'user_id' 
+  },
+    user_description: { type: Sequelize.STRING, allowNull:false },
+     createdAt: Sequelize.DATE,
+     updatedAt: Sequelize.DATE,
+})
+   
 const Controller = {
     Users:Users,
-    Projects:Projects
+    Projects:Projects,
+    usersDescription:usersDescription
   
   }
+
+
 sequelize.sync()
 module.exports = Controller

@@ -1,11 +1,13 @@
 import App from '../Components/App.jsx'
+import Profile from '../Components/Profile.jsx'
 import LoginForm from '../Components/LoginForm.jsx'
 import JobForm from '../Components/JobForm.jsx'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 ReactDOM.render(
-    <App/>,
+    // <App/>,
+    <Profile/>,
   document.getElementById('root')
 );
 
