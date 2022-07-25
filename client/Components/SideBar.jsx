@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header, Icon, Image, Menu, Segment, Sidebar } from 'semantic-ui-react'
-
+import { NavLink, Redirect, Route  } from 'react-router-dom'
 const SideBar = () => (
   <Sidebar.Pushable as={Segment}>
     <Sidebar 
@@ -12,17 +12,15 @@ const SideBar = () => (
       visible
       width='thin'
     >
-      <Menu.Item as='a'>
-        <Icon name='home' />
-        Home
+      <Menu.Item as={NavLink} exact to='/'>
+        <Icon name='home' />Home
       </Menu.Item>
-      <Menu.Item as='a'>
-        <Icon name='search' />
-        Find Jobs
+      <Menu.Item as={NavLink} exact to='/jobs'>
+        <Icon name='search' />Find Jobs
       </Menu.Item>
-      <Menu.Item as='a'>
-        <Icon name='pie chart' />
-        Your Jobs
+      <Menu.Item as={NavLink} exact to='/profile'>
+        <Icon name='pie chart' />Your Jobs
+
       </Menu.Item>
     </Sidebar>
 

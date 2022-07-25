@@ -62,7 +62,7 @@ module.exports = {
     },
     get_user_description(req,res){
         return usersDescription
-        .findOne({where:{user_description_id:"34"}})
+        .findOne({where:{user_description_id:"36"}})
         .then((result)=>{
             res.status(200).send({'user_description':result})})
         .catch((error)=>{
