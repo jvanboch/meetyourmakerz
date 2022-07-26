@@ -1,29 +1,27 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import { NavLink , Navigate , Route, Router  } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
 
-import Jobs from "./Jobs.jsx"
-  class LoginForm extends React.Component{
-    state={
-            loginSuccess:'not entered',
-            password:"",
-            username:""
-        }
 
-    onChangePassword(event, data){
-      this.setState({ password: data.value })
+  function LoginForm() {
+
+    const[password, userPassword] = useState('')
+    const[username, userUsername] = useState('')
+    const[loginSuccess, userLoginSuccess] = useState('pending password')
+
+    const onChangePassword = (event, data)=>{
+        userPassword(data.value)
       }
-  onChangeUsername(event, data){
-      this.setState({ username: data.value })
+    const onChangeUsername = (event, data) => {
+      userUsername(data.value)
       }
-      onCredentialSubmit(e){
+    const onCredentialSubmit= (e) => {
         e.preventDefault()
-        console.log('triggered')
         var requestOptions ={
           method: "POST",
           headers:{"Content-type":"application/json"},
-          body:JSON.stringify({username:this.state.username, password:this.state.password})
+          body:JSON.stringify({username:username, password:password})
         };
         fetch('/api/userlogin', requestOptions).then((response)=>{
           if (response.ok){
@@ -31,22 +29,20 @@ import Jobs from "./Jobs.jsx"
           }}).then((res)=>{
          
           if (res.result!==true){
-            console.log(res.result)
-            this.setState({loginSuccess: false})
+            userLoginSuccess(false)
             
           }else{
 
-            this.setState({loginSuccess:true})
+            userLoginSuccess(true)
           }
         }).catch((err)=>{
           console.log(err)
-          this.setState({loginSuccess:false})})
+          userLoginSuccess(false)
 
-      }
+      })
+    }
 
-    render(){
-
-      if (this.state.loginSuccess ===true){
+      if (loginSuccess===true){
       
   return(
     
@@ -54,7 +50,7 @@ import Jobs from "./Jobs.jsx"
     <Navigate to ="/jobs"/>
     
 
-)}else if (this.state.loginSuccess){
+)}else if (loginSuccess){
 return(
     
   <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
@@ -64,17 +60,17 @@ return(
       </Header>
       <Form size='large'>
         <Segment stacked>
-          <Form.Input fluid icon='user' iconPosition='left' onChange = {this.onChangeUsername.bind(this)}placeholder='User Name' />
+          <Form.Input fluid icon='user' iconPosition='left' onChange = {onChangeUsername}placeholder='User Name' />
           <Form.Input
             fluid
             icon='lock'
             iconPosition='left'
             placeholder='Password'
             type='password'
-            onChange={this.onChangePassword.bind(this)}
+            onChange={onChangePassword}
           />
 
-          <Button color='teal' fluid size='large' onClick = {this.onCredentialSubmit.bind(this)}>
+          <Button color='teal' fluid size='large' onClick = {onCredentialSubmit}>
             Login
           </Button>
         </Segment>
@@ -95,17 +91,17 @@ return(
         </Header>
         <Form size='large'>
           <Segment stacked>
-            <Form.Input fluid icon='user' iconPosition='left' placeholder='User Name' onChange = {this.onChangeUsername.bind(this)} />
+            <Form.Input fluid icon='user' iconPosition='left' placeholder='User Name' onChange = {onChangeUsername} />
             <Form.Input
               fluid
               icon='lock'
               iconPosition='left'
               placeholder='Password'
               type='password'
-              onChange={this.onChangePassword.bind(this)}
+              onChange={onChangePassword}
             />
   
-            <Button color='teal' fluid size='large' onClick = {this.onCredentialSubmit.bind(this)}>
+            <Button color='teal' fluid size='large' onClick = {onCredentialSubmit}>
               Login
             </Button>
           </Segment>
@@ -123,6 +119,6 @@ return(
 
 
       }
-    }
+    
 
 export default LoginForm
