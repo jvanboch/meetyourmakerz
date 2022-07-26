@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext} from 'react'
 import { Header, Table, Rating } from 'semantic-ui-react'
 import SideBar from './SideBar.jsx'
 import { useEffect } from "react";
-
+import UserContext from './Context.jsx'
 
 function Jobs() {
+        const [context, setContext] = useContext(UserContext);
         const [jobs,setJobs]=useState([])
+       
+          //  let useid=  useContext(UserContext)
+
         useEffect(()=>{  
+          console.log(context)
           const fetchData = async()=>{
+            
             fetch('/api/jobs')
             .then((response) =>response.json()).then((response)=>{
             console.log(response)
@@ -17,6 +23,7 @@ function Jobs() {
           fetchData()
         },[])
     return(
+      
   <div style={{ "display": "flex", height: '100vh'}}>
       <div style={{ "border":"solid", "width":"8%"}}><SideBar/></div>
       <div style={{"width":"50%", "display": "flex", "align-items":"center", "justifyContent":"center", "border":"solid 1px #dddddd", height: '100vh', "padding":"10%"}}>

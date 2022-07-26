@@ -1,15 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState,createContext, useContext, useEffect } from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import { NavLink , Navigate , Route, Router  } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
+import UserContext from './Context.jsx'
+
+function LoginForm() {
 
 
-  function LoginForm() {
+  const [context, setContext] = useContext(UserContext);
+    // useEffect(()=>{
+    //   setContext("New Value")
 
+    // console.log(context)
+    // })
     const[password, userPassword] = useState('')
     const[username, userUsername] = useState('')
     const[loginSuccess, userLoginSuccess] = useState('pending password')
-
+   
     const onChangePassword = (event, data)=>{
         userPassword(data.value)
       }
@@ -32,7 +39,7 @@ import { useNavigate } from "react-router-dom";
             userLoginSuccess(false)
             
           }else{
-
+            setContext(username)
             userLoginSuccess(true)
           }
         }).catch((err)=>{
@@ -46,13 +53,13 @@ import { useNavigate } from "react-router-dom";
       
   return(
     
-    
-    <Navigate to ="/jobs"/>
+ 
+     <Navigate to ="/jobs"/>
     
 
 )}else if (loginSuccess){
 return(
-    
+  
   <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
       <Header as='h2' color='teal' textAlign='center'>
