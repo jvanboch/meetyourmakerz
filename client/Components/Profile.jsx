@@ -1,28 +1,30 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import SideBar from './SideBar.jsx'
 import { Header, Table, Rating } from 'semantic-ui-react'
-class Profile extends Component {
-    state={
-        description:" ",
-        jobs:[],
-        userid: ''
-    }
-    onChangeDescription(event, data){
-        event.preventDefault()
-        this.setState({ description: event.target.value })
-        
+import UserContext from './Context.jsx'
+function Profile() {
+ 
+    const [description, setDescription] = useState('')
+    const [jobs, setJobs] = useState([])
+    
+    const [context, setContext] = useContext(UserContext);
+    const onChangeDescription = (event, data) =>
+        {
+            event.preventDefault()
+            setDescription(event.target.value )
         }
     
       
 
 
-    onDescriptionSubmit(event){
+    const onDescriptionSubmit = (event) =>
+    {
 
         event.preventDefault()
         var requestOptions ={
         method: "POST",
         headers:{"Content-type":"application/json"},
-        body:JSON.stringify({user_description:this.state.description})
+        body:JSON.stringify({user_description:description})
         };
         fetch('/api/user_description', requestOptions).then((response)=>{
         if (response.ok){
@@ -34,26 +36,26 @@ class Profile extends Component {
         })
 
     }
-    componentDidMount(){
-  
-        console.log(this.state.username)
-        fetch('/api/user_description')
-        .then((response) =>response.json()).then((response)=>{
-         this.setState({description:response.user_description.user_description})
-         
-        }).catch((err)=>console.log(err))
+    useEffect(() => 
+    {
+        const getJobs= async()=>{
 
-        fetch('/api/jobs')
-        .then((response) =>response.json()).then((response)=>{
+            fetch('/api/user_description')
+            .then((response) =>response.json()).then((response)=>{
+            setDescription(response.user_description.user_description)
+            
+            }).catch((err)=>console.log(err))
 
-         this.setState({jobs:response})
-         
-        }).catch((err)=>console.log('error',err))
-        
+            fetch('/api/jobs')
+            .then((response) =>response.json()).then((response)=>{
+
+            setJobs(response)
+            
+            }).catch((err)=>console.log('error',err))
+        } 
+        getJobs()
     
-    }
-   
-	render() {
+    },[])
         
 		return (
             <div style={{ "display": "flex", height: '100vh'}}>
@@ -61,10 +63,10 @@ class Profile extends Component {
                     <div style={{"padding":"60px", "display":"flex", "flex-direction": "column","gap":"60px"}}>
                         <div style={{ "display": "flex", "justifyContent":"left", height: '300px'}}>
                             <img src='/profile.jpg' style={{"width": "300px","padding": "5px", "border-radius": "4px", "border": "1px solid #ddd"}} ></img>
-                            <form onSubmit={this.handleSubmit} style = {{"display": "flex", "flex-direction": "column"}}>
+                            <form onSubmit={onDescriptionSubmit} style = {{"display": "flex", "flex-direction": "column"}}>
                                  <label>
                                 
-                                    <textarea value={this.state.description} onChange={this.onChangeDescription.bind(this)} style={{"width":"600px", "height":"300px"}} />
+                                    <textarea value={description} onChange={onChangeDescription} style={{"width":"600px", "height":"300px"}} />
                                  </label>
                                
                                 </form>
@@ -93,7 +95,7 @@ class Profile extends Component {
 
                                 <Table.Body>
                                     
-                                { this.state.jobs.map((job)=>
+                                {jobs.map((job)=>
                                 <Table.Row>
                                     <Table.Cell>
                                     </Table.Cell>
@@ -107,7 +109,7 @@ class Profile extends Component {
                                 </Table.Body>
                             </Table>
                         </div>
-                        <button class="ui icon button" style={{"color":"white", "background-color": "#24a0ed", "width": "10%", "margin-left":"auto"}}  onClick={this.onDescriptionSubmit.bind(this)} >
+                        <button class="ui icon button" style={{"color":"white", "background-color": "#24a0ed", "width": "10%", "margin-left":"auto"}}  onClick={onDescriptionSubmit} >
                                     <i class="edit icon" size= "small" style={{"vertical-align": "middle"}}></i>
                                 </button>
                                    
@@ -117,6 +119,6 @@ class Profile extends Component {
 
         )
         }
-}
+
 
 export default Profile 
