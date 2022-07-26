@@ -35,8 +35,7 @@ import Jobs from "./Jobs.jsx"
             this.setState({loginSuccess: false})
             
           }else{
-            console.log('else', this.props)
-        
+
             this.setState({loginSuccess:true})
           }
         }).catch((err)=>{
@@ -52,7 +51,7 @@ import Jobs from "./Jobs.jsx"
   return(
     
     
-    <Navigate to="/jobs"/>
+    <Navigate to ="/jobs"/>
     
 
 )}else if (this.state.loginSuccess){

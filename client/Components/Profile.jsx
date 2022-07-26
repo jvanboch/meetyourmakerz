@@ -4,12 +4,13 @@ import { Header, Table, Rating } from 'semantic-ui-react'
 class Profile extends Component {
     state={
         description:" ",
-        jobs:[]
+        jobs:[],
+        userid: ''
     }
     onChangeDescription(event, data){
         event.preventDefault()
-        console.log(event.target.value)
         this.setState({ description: event.target.value })
+        
         }
     
       
@@ -18,7 +19,6 @@ class Profile extends Component {
     onDescriptionSubmit(event){
 
         event.preventDefault()
-        console.log('triggered')
         var requestOptions ={
         method: "POST",
         headers:{"Content-type":"application/json"},
@@ -28,29 +28,29 @@ class Profile extends Component {
         if (response.ok){
             return response.json();
         }}).then((res)=>{
-        console.log(res)
+       
         }).catch((err)=>{
         console.log(err)
         })
 
     }
     componentDidMount(){
-       
+  
+        console.log(this.state.username)
         fetch('/api/user_description')
         .then((response) =>response.json()).then((response)=>{
-        console.log(response.user_description.user_description)
          this.setState({description:response.user_description.user_description})
          
         }).catch((err)=>console.log(err))
 
         fetch('/api/jobs')
         .then((response) =>response.json()).then((response)=>{
-        console.log('state', response)
+
          this.setState({jobs:response})
          
         }).catch((err)=>console.log('error',err))
         
-        console.log(this.state.jobs)
+    
     }
    
 	render() {

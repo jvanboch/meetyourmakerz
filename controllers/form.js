@@ -38,11 +38,23 @@ module.exports = {
         res.status(400).send(error)})
     },
     user_login(req,res){
+        console.log('in there beginning')
         return Users
         .findOne({where:{username:req.body.username}})
         .then((result)=>bcrypt.compare(req.body.password, result.password))
         .then((result)=>{
-            res.status(200).send({'result':result})})
+            res.status(200).send({'result':result})
+            if (result){
+        return Users.findOne({where:{username:req.body.username}})
+            .then((record)=>{
+                console.log('record HERE IT IS', record.user_id)
+            req.session.user_id=record.user_id
+            console.log('req.session', req.session.user_id)
+            
+            })
+            }
+           })
+        
         .catch((error)=>{
             console.log(error)
             res.status(400).send(error)

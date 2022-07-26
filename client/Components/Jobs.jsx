@@ -1,20 +1,21 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { Header, Table, Rating } from 'semantic-ui-react'
 import SideBar from './SideBar.jsx'
-class Jobs extends Component {
-        state = {jobs:[]}
+import { useEffect } from "react";
 
-        componentDidMount(){
-            console.log('running')
+
+function Jobs() {
+        const [jobs,setJobs]=useState([])
+        useEffect(()=>{  
+          const fetchData = async()=>{
             fetch('/api/jobs')
             .then((response) =>response.json()).then((response)=>{
             console.log(response)
-             this.setState({jobs:response})
-             
+            setJobs(response);
             }).catch((err)=>console.log(err))
-        }
-
-    render(){
+          }
+          fetchData()
+        },[])
     return(
   <div style={{ "display": "flex", height: '100vh'}}>
       <div style={{ "border":"solid", "width":"8%"}}><SideBar/></div>
@@ -30,8 +31,8 @@ class Jobs extends Component {
     </Table.Header>
 
     <Table.Body>
-        
-      { this.state.jobs.map((job)=>
+        {console.log( 'setjobs', jobs)}
+      { jobs.map((job)=>
     <Table.Row>
         <Table.Cell>
         </Table.Cell>
@@ -47,5 +48,5 @@ class Jobs extends Component {
   </div>
   </div>      
 )
-}}
+}
 export default Jobs
