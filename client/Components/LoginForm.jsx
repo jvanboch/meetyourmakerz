@@ -39,8 +39,14 @@ function LoginForm() {
             userLoginSuccess(false)
             
           }else{
-            setContext(username)
+            
             userLoginSuccess(true)
+            fetch(`/api/${username}/id`).then((response)=>
+            
+              response.json()).then((res)=>{
+                setContext(res.user_id)
+                console.log('loginform', res.user_id)
+            }).catch(err=>console.log('error',err))
           }
         }).catch((err)=>{
           console.log(err)
@@ -52,7 +58,7 @@ function LoginForm() {
       if (loginSuccess===true){
       
   return(
-    
+
  
      <Navigate to ="/jobs"/>
     

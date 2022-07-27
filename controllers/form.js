@@ -18,8 +18,13 @@ module.exports = {
         res.status(400).send(error)});
     },
     getProjects(req,res){
+        userid=req.params.userid;
         return Projects
-        .findAll({}).then((projects)=>{
+        .findAll({
+            where:{
+                user_id: userid
+            }
+        }).then((projects)=>{
             res.status(200).send(projects)})
         .catch((error)=>{
             console.log(error)
@@ -38,21 +43,12 @@ module.exports = {
         res.status(400).send(error)})
     },
     user_login(req,res){
-        console.log('in there beginning')
         return Users
         .findOne({where:{username:req.body.username}})
         .then((result)=>bcrypt.compare(req.body.password, result.password))
         .then((result)=>{
             res.status(200).send({'result':result})
-            if (result){
-        return Users.findOne({where:{username:req.body.username}})
-            .then((record)=>{
-                console.log('record HERE IT IS', record.user_id)
-            req.session.user_id=record.user_id
-            console.log('req.session', req.session.user_id)
-            
-            })
-            }
+
            })
         
         .catch((error)=>{
@@ -61,6 +57,15 @@ module.exports = {
         })
 
         },
+    get_userid(req,res){
+            return Users.findOne(
+                {where:{username:req.params.user}
+            })
+                .then((record)=>{
+                   res.status(201).send(record)
+                }).catch(err=>res.status(400).send('not found'))
+                },
+    
     new_description(req,res) {
     
         return usersDescription
@@ -73,8 +78,9 @@ module.exports = {
         res.status(400).send(error)});
     },
     get_user_description(req,res){
+        userid=req.params.userid;
         return usersDescription
-        .findOne({where:{user_description_id:"36"}})
+        .findOne({where:{user_id:userid}})
         .then((result)=>{
             res.status(200).send({'user_description':result})})
         .catch((error)=>{

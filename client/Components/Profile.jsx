@@ -7,7 +7,7 @@ function Profile() {
     const [description, setDescription] = useState('')
     const [jobs, setJobs] = useState([])
     
-    const [context, setContext] = useContext(UserContext);
+    const [user_id, setContext] = useContext(UserContext);
     const onChangeDescription = (event, data) =>
         {
             event.preventDefault()
@@ -24,7 +24,7 @@ function Profile() {
         var requestOptions ={
         method: "POST",
         headers:{"Content-type":"application/json"},
-        body:JSON.stringify({user_description:description})
+        body:JSON.stringify({user_description:description, user: user_id})
         };
         fetch('/api/user_description', requestOptions).then((response)=>{
         if (response.ok){
@@ -39,16 +39,18 @@ function Profile() {
     useEffect(() => 
     {
         const getJobs= async()=>{
-
-            fetch('/api/user_description')
+            console.log('userid', user_id)
+            fetch(`/api/${user_id}/user_description`)
+        
             .then((response) =>response.json()).then((response)=>{
+            
             setDescription(response.user_description.user_description)
             
             }).catch((err)=>console.log(err))
 
-            fetch('/api/jobs')
+            fetch(`/api/${user_id}/jobs`)
             .then((response) =>response.json()).then((response)=>{
-
+                console.log('jobs', jobs)
             setJobs(response)
             
             }).catch((err)=>console.log('error',err))

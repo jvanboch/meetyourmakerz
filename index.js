@@ -19,15 +19,19 @@ app.use(session({
     secret: "thisismysecrctekey",
     saveUninitialized:true,
     cookie: { maxAge: oneDay },
-    resave: false 
+    resave: false,
+    
 }));
 app.use(cookieParser());
-app.get('/api/jobs',projectFormController.getProjects)
-app.get('/api/user_description', projectFormController.get_user_description)
+app.get('/api/:userid/jobs',projectFormController.getProjects)
+app.get('/api/:userid/user_description', projectFormController.get_user_description)
+app.get('/api/:user/id', projectFormController.get_userid)
 app.use(express.static(`${__dirname}/client/dist`));
+
 app.get('/*', (req, res) => {
   res.sendFile(`${__dirname}/client/dist/index.html`);
 });
+
 app.post('/api/userlogin',projectFormController.user_login)
 app.post('/api/form',projectFormController.new_project)
 app.post('/api/signup', projectFormController.user_signup)
