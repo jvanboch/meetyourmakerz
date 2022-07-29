@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { useState, useContext } from 'react'
 import STLViewer from 'stl-viewer'
 import SideBar from './SideBar.jsx'
+import UserContext from './Context.jsx'
 import {
   Button,
   Checkbox,
@@ -18,31 +19,32 @@ const options = [
   { key: 'o', text: 'other', value: 'other' },
 ]
 
-class JobForm extends Component {
-  state = {qty:'',
-           value:''}
-  onSubmit(e) {
+function JobForm() {
+  const [userid, setContext] = useContext(UserContext);
+  const [qty, updateQty] = useState('')
+  const[value, updateValue] = useState('')
+
+  const onSubmit = (e)=>{
+    console.log('userid', userid)
     e.preventDefault();
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({project_description: this.state.value, qty: this.state.qty })
+      body: JSON.stringify({project_description: value, qty: qty, job_ownerid: userid })
   };
   fetch('/api/form', requestOptions)
       .then(response => response.json())
-      .then(data => this.setState({ postId: data.id }));
 }
 
  
-  onChangeProjectDescription(event, data){
-  this.setState({ value: data.value })
-}
-onChangeQty(event, data){
-  
-  this.setState({ qty: data.value })
-}
-  render() {
-    const { value } = this.state
+  const onChangeProjectDescription=(event, data)=> {
+    updateValue(data.value)
+  }
+  const onChangeQty= (event, data) => {
+    updateQty(data.value)
+  }
+
+
     return (
     
         
@@ -73,7 +75,7 @@ onChangeQty(event, data){
           <label>Quantity</label>
           <Form.Field
             control={Input}
-            onChange={this.onChangeQty.bind(this)}
+            onChange={onChangeQty}
             placeholder='1'
 
           />
@@ -81,7 +83,7 @@ onChangeQty(event, data){
         </Form.Group>
         <Form.Field
           control={TextArea}
-          onChange={this.onChangeProjectDescription.bind(this)}
+          onChange={onChangeProjectDescription}
           label='About'
           placeholder='Tell us more about your project...'
         />
@@ -89,13 +91,13 @@ onChangeQty(event, data){
           control={Checkbox}
           label='I agree to the Terms and Conditions'
         />
-        <Form.Field onClick={this.onSubmit.bind(this)} control={Button}>Submit</Form.Field>
+        <Form.Field onClick={onSubmit} control={Button}>Submit</Form.Field>
       </Form>
       </div>
       </div>
      
     )
   }
-}
+
 
 export default JobForm

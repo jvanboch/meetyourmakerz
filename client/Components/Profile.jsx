@@ -6,6 +6,7 @@ function Profile() {
  
     const [description, setDescription] = useState('')
     const [jobs, setJobs] = useState([])
+    const [jobsOwner, setjobsOwner] = useState([])
     
     const [user_id, setContext] = useContext(UserContext);
     const onChangeDescription = (event, data) =>
@@ -24,7 +25,7 @@ function Profile() {
         var requestOptions ={
         method: "POST",
         headers:{"Content-type":"application/json"},
-        body:JSON.stringify({user_description:description, user: user_id})
+        body:JSON.stringify({user_description:description, username: user_id})
         };
         fetch('/api/user_description', requestOptions).then((response)=>{
         if (response.ok){
@@ -50,7 +51,7 @@ function Profile() {
 
             fetch(`/api/${user_id}/jobs`)
             .then((response) =>response.json()).then((response)=>{
-                console.log('jobs', jobs)
+                console.log('jobs', response)
             setJobs(response)
             
             }).catch((err)=>console.log('error',err))
@@ -99,12 +100,9 @@ function Profile() {
                                     
                                 {jobs.map((job)=>
                                 <Table.Row>
-                                    <Table.Cell>
-                                    </Table.Cell>
+                                    <Table.Cell singleLine>{job.user_id}</Table.Cell>
                                     <Table.Cell singleLine>{job.qty}</Table.Cell>
-                                    <Table.Cell>
-                                    {job.project_description}
-                                    </Table.Cell>
+                                    <Table.Cell>{job.project_description}</Table.Cell>
                                 </Table.Row>
                                 )}
 

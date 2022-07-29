@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('./connection');
-const Users = sequelize.define('user', {
+const User = sequelize.define("User",{
     user_id:{
         type:Sequelize.INTEGER,
         autoIncrement:true,
@@ -18,11 +18,11 @@ const Users = sequelize.define('user', {
         },
      createdAt: Sequelize.DATE,
      updatedAt: Sequelize.DATE,
-})
-   
+    })
+
 
    
-var Projects = sequelize.define('project', {
+var Project = sequelize.define("Project", {
     project_id:{
         type:Sequelize.INTEGER,
         autoIncrement:true,
@@ -31,13 +31,22 @@ var Projects = sequelize.define('project', {
     },
     user_id: {
         type: Sequelize.INTEGER,
-        model: 'user', 
-        key: 'user_id' 
+
   },
   qty:{
       type:Sequelize.INTEGER,
       allowNull:false
   },
+  job_ownerid: {
+    type: Sequelize.INTEGER,
+    // model: 'user', 
+    // key: 'user_id' 
+},
+job_customer_id: {
+    type: Sequelize.INTEGER,
+    // model: 'user', 
+    // key: 'user_id' 
+},
     project_description: { type: Sequelize.STRING, allowNull:false },
     myDate: { type: Sequelize.DATE, 
             defaultValue: Sequelize.NOW },
@@ -60,14 +69,20 @@ const usersDescription = sequelize.define('userDescription', {
      createdAt: Sequelize.DATE,
      updatedAt: Sequelize.DATE,
 })
-   
+// Users.hasOne(Projects, {
+//     foreignKey: 'job_ownerid'
+//   });
+//   Projects.belongsTo(Users);
+User.hasMany(Project)
+
+
 const Controller = {
-    Users:Users,
-    Projects:Projects,
+    User:User,
+    Project:Project,
     usersDescription:usersDescription
+}
   
-  }
 
 
-sequelize.sync()
+
 module.exports = Controller

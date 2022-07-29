@@ -1,16 +1,17 @@
 const Controller = require('../db/table_creation')
-const Projects = Controller.Projects
-const Users = Controller.Users
+const Project = Controller.Project
+const User = Controller.User
 const usersDescription = Controller.usersDescription
 const bcrypt = require('bcrypt');
 
 module.exports = {
     new_project(req,res) {
        
-        return Projects
+        return Project
         .create({
             project_description:req.body.project_description,
-            qty:req.body.qty
+            qty:req.body.qty, 
+            job_customer_id:req.body.job_ownerid
         })
     .then((company) => res.status(201).send(company))
     .catch((error) => {
@@ -19,20 +20,34 @@ module.exports = {
     },
     getProjects(req,res){
         userid=req.params.userid;
-        return Projects
+        return Project
         .findAll({
             where:{
-                user_id: userid
-            }
+                job_customer_id: userid
+            },
+            raw:true
+           
         }).then((projects)=>{
-            res.status(200).send(projects)})
+            var user_projects= projects
+            return User
+            .findOne({
+                where:{
+                    user_id: userid
+                },
+                raw:true
+            }).then((result)=> {
+                user_projects[0].user_id=result.username
+                console.log('projects,  user', user_projects[0])
+                res.status(200).send(user_projects)})
+            })
+           
         .catch((error)=>{
             console.log(error)
             res.status(400).send(error)})
         },
     async user_signup(req,res){//used to create a new user
         const salt = await bcrypt.genSalt(10);
-        return Users
+        return User
         .create({
             username:req.body.username,
             password:  await bcrypt.hash(req.body.password, salt),
@@ -43,7 +58,7 @@ module.exports = {
         res.status(400).send(error)})
     },
     user_login(req,res){
-        return Users
+        return User
         .findOne({where:{username:req.body.username}})
         .then((result)=>bcrypt.compare(req.body.password, result.password))
         .then((result)=>{
@@ -58,7 +73,7 @@ module.exports = {
 
         },
     get_userid(req,res){
-            return Users.findOne(
+            return User.findOne(
                 {where:{username:req.params.user}
             })
                 .then((record)=>{
@@ -70,7 +85,8 @@ module.exports = {
     
         return usersDescription
         .create({
-            user_description:req.body.user_description
+            user_description:req.body.user_description,
+            user_id: req.body.username
         })
     .then((result) => res.status(201).send(result))
     .catch((error) => {
