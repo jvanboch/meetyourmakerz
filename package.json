@@ -17,6 +17,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
+    "google-map-react": "^2.2.0",
     "nodemon": "^2.0.15",
     "react": "^17.0.1",
     "react-3d-viewer": "^1.0.12",

@@ -74,9 +74,10 @@ function Profile() {
                                
                                 </form>
                             
-                        
+                                <div><img src="https://maps.googleapis.com/maps/api/staticmap?center=Redwood City, CA&zoom=12&size=400x400&key=AIzaSyAzzwLCZ0KtXGEtyvcWMeqy3qDFwUvAqcg"></img></div>
                             
                         </div>
+                      
                         <div style={{"diplay":"flex", "flex-direction": "row"}}>
                         {/* <h1>Jobs</h1>
                         { this.state.jobs.map((job)=>

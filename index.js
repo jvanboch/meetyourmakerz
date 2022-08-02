@@ -23,7 +23,8 @@ app.use(session({
     
 }));
 app.use(cookieParser());
-app.get('/api/:userid/jobs',projectFormController.getProjects)
+app.get('/api/:userid/jobs',projectFormController.getProfileProjects)
+app.get('/api/jobs', projectFormController.getAllProjects)
 app.get('/api/:userid/user_description', projectFormController.get_user_description)
 app.get('/api/:user/id', projectFormController.get_userid)
 app.use(express.static(`${__dirname}/client/dist`));

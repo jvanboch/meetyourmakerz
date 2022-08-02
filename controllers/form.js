@@ -18,7 +18,19 @@ module.exports = {
         console.log(error)
         res.status(400).send(error)});
     },
-    getProjects(req,res){
+    getAllProjects(req,res){
+        return Project
+        .findAll()
+        .then((projects)=>{
+            res.status(200).send(projects)
+        })
+           
+        .catch((error)=>{
+            console.log(error)
+            res.status(400).send(error)
+        })
+        },
+    getProfileProjects(req,res){
         userid=req.params.userid;
         return Project
         .findAll({
