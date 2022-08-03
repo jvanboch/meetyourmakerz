@@ -62,23 +62,22 @@ function Profile() {
     },[])
         
 		return (
-            <div style={{ "display": "flex", height: '100vh'}}>
-                <div style={{ "border":"solid", "width":"8%"}}><SideBar/></div>
-                    <div style={{"padding":"60px", "display":"flex", "flex-direction": "column","gap":"60px"}}>
-                        <div style={{ "display": "flex", "justifyContent":"left", height: '300px'}}>
-                            <img src='/profile.jpg' style={{"width": "300px","padding": "5px", "border-radius": "4px", "border": "1px solid #ddd"}} ></img>
-                            <form onSubmit={onDescriptionSubmit} style = {{"display": "flex", "flex-direction": "column"}}>
-                                 <label>
-                                
-                                    <textarea value={description} onChange={onChangeDescription} style={{"width":"600px", "height":"300px"}} />
-                                 </label>
-                               
-                                </form>
+            <div style={{ "display": "flex", "height": "auto", "background-color":"#f3f2ef"}}>
+                <div style={{ "border":"solid", "width":"8%", "position":"sticky", "top":"0"}}><SideBar/></div>
+                    <div style={{"padding":"60px", "display":"flex", "flex-direction": "column","gap":"30px",  "margin":"auto"}}>
+                        <div style={{  "height": "300px", "background-color":"white", "border": "2px rgb(0 0 0 / 60%)", "border-radius":"10px"}}>
+                            <img src='/profile.jpg' style={{"width": "150px","height": "150px","padding": "5px", "border-radius": "50%"}} ></img>
+                          
+                          
                             
-                                <div><img style ={{"padding":"5px"}} src={`https://maps.googleapis.com/maps/api/staticmap?center=Redwood City, CA&zoom=12&size=400x400&key=${REACT_APP_MAP_API_KEY}`}></img></div>
+                            
+                            
                             
                         </div>
-                      
+                        <div style = {{"display": "flex", "flex-direction": "row",  "background-color":"white", "border": "2px rgb(0 0 0 / 60%)", "border-radius":"10px", "align-items":"center"}}>
+                            <div style ={{"height":"400px", "width":"400px", "padding":"5px"}}>{description}</div>
+                            <div><img style ={{"padding":"5px" }} src={`https://maps.googleapis.com/maps/api/staticmap?center=Redwood City, CA&zoom=12&size=350x350&key=${REACT_APP_MAP_API_KEY}`}></img></div>
+                        </div> {/*user description Div*/}
                         <div style={{"diplay":"flex", "flex-direction": "row"}}>
                         {/* <h1>Jobs</h1>
                         { this.state.jobs.map((job)=>
