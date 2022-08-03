@@ -2,12 +2,12 @@ import React, { useEffect, useState,useContext } from 'react'
 import SideBar from './SideBar.jsx'
 import { Header, Table, Rating } from 'semantic-ui-react'
 import UserContext from './Context.jsx'
+import { REACT_APP_MAP_API_KEY } from "@env";
 function Profile() {
  
     const [description, setDescription] = useState('')
     const [jobs, setJobs] = useState([])
     const [jobsOwner, setjobsOwner] = useState([])
-    
     const [user_id, setContext] = useContext(UserContext);
     const onChangeDescription = (event, data) =>
         {
@@ -39,6 +39,7 @@ function Profile() {
     }
     useEffect(() => 
     {
+        
         const getJobs= async()=>{
             console.log('userid', user_id)
             fetch(`/api/${user_id}/user_description`)
@@ -74,7 +75,7 @@ function Profile() {
                                
                                 </form>
                             
-                                <div><img src="https://maps.googleapis.com/maps/api/staticmap?center=Redwood City, CA&zoom=12&size=400x400&key=AIzaSyAzzwLCZ0KtXGEtyvcWMeqy3qDFwUvAqcg"></img></div>
+                                <div><img style ={{"padding":"5px"}} src={`https://maps.googleapis.com/maps/api/staticmap?center=Redwood City, CA&zoom=12&size=400x400&key=${REACT_APP_MAP_API_KEY}`}></img></div>
                             
                         </div>
                       

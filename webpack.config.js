@@ -19,7 +19,7 @@ module.exports= {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-react','@babel/preset-env',{
-                'plugins': ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime']}]
+                'plugins': ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime',"module:react-native-dotenv"]}]
           }
         }
     },
@@ -32,6 +32,7 @@ module.exports= {
 
 ]
    
-}
+},
+
 
   }
