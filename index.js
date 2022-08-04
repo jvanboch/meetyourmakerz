@@ -27,6 +27,7 @@ app.get('/api/:userid/jobs',projectFormController.getProfileProjects)
 app.get('/api/jobs', projectFormController.getAllProjects)
 app.get('/api/:userid/user_description', projectFormController.get_user_description)
 app.get('/api/:user/id', projectFormController.get_userid)
+app.get('/api/:userid/userinformation', projectFormController.get_user_information)
 app.use(express.static(`${__dirname}/client/dist`));
 
 app.get('/*', (req, res) => {

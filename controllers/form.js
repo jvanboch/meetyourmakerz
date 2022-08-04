@@ -116,7 +116,18 @@ module.exports = {
             res.status(400).send(error)
         })
 
-        }
+        },
+    get_user_information(req,res) {
+        userid=req.params.userid;
+        return User
+        .findOne({where:{user_id:userid}})
+        .then((result)=>{
+            res.status(200).send({"user_info":result})
+        })
+        .catch((error)=>{
+            res.status(400).send(error)
+        })
+    }
     }
 
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext } from 'react'
+import React, { useEffect, useState,useContext, useInsertionEffect } from 'react'
 import SideBar from './SideBar.jsx'
 import { Header, Table, Rating } from 'semantic-ui-react'
 import UserContext from './Context.jsx'
@@ -7,6 +7,7 @@ function Profile() {
  
     const [description, setDescription] = useState('')
     const [jobs, setJobs] = useState([])
+    const[userInfo, setUserInfo] = useState([])
     const [jobsOwner, setjobsOwner] = useState([])
     const [user_id, setContext] = useContext(UserContext);
     const onChangeDescription = (event, data) =>
@@ -56,26 +57,34 @@ function Profile() {
             setJobs(response)
             
             }).catch((err)=>console.log('error',err))
+            fetch(`/api/${user_id}/userinformation`).then((response)=>response.json())
+            .then((response)=>{
+                
+                setUserInfo(response.user_info)
+            })
+            .catch((err)=>{
+                console.log('error user info', err)
+            })
         } 
         getJobs()
     
     },[])
-        
+
+  
 		return (
-            <div style={{ "display": "flex", "height": "auto", "background-color":"#f3f2ef"}}>
+            <div style={{ "display": "flex", "height": "auto", "background-color":"#f3f2ef"
+            }}>
                 <div style={{ "border":"solid", "width":"8%", "position":"sticky", "top":"0"}}><SideBar/></div>
                     <div style={{"padding":"60px", "display":"flex", "flex-direction": "column","gap":"30px",  "margin":"auto"}}>
                         <div style={{  "height": "300px", "background-color":"white", "border": "2px rgb(0 0 0 / 60%)", "border-radius":"10px"}}>
                             <img src='/profile.jpg' style={{"width": "150px","height": "150px","padding": "5px", "border-radius": "50%"}} ></img>
-                          
-                          
-                            
-                            
-                            
-                            
+                            <div style={{"border":"solid"}}>Username: {userInfo.username}</div>
+
+                            <div style={{"border":"solid"}}>Techonologies: {userInfo.technologies}</div>
                         </div>
                         <div style = {{"display": "flex", "flex-direction": "row",  "background-color":"white", "border": "2px rgb(0 0 0 / 60%)", "border-radius":"10px", "align-items":"center"}}>
                             <div style ={{"height":"400px", "width":"400px", "padding":"5px"}}>{description}</div>
+                           
                             <div><img style ={{"padding":"5px" }} src={`https://maps.googleapis.com/maps/api/staticmap?center=Redwood City, CA&zoom=12&size=350x350&key=${REACT_APP_MAP_API_KEY}`}></img></div>
                         </div> {/*user description Div*/}
                         <div style={{"diplay":"flex", "flex-direction": "row"}}>

@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('./connection');
+
 const User = sequelize.define("User",{
     user_id:{
         type:Sequelize.INTEGER,
@@ -18,6 +19,7 @@ const User = sequelize.define("User",{
         },
      createdAt: Sequelize.DATE,
      updatedAt: Sequelize.DATE,
+     technologies:{type: Sequelize.STRING, allowNull: true}
     })
 
 
